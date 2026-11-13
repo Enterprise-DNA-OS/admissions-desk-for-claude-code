@@ -41,7 +41,7 @@ PGlite runs locally. Set DATABASE_URL for PostgreSQL. The CLI expects a trusted 
 4. /offer-followup lists recorded offers with no response.
 5. /weekly-review combines attention, reader workload, offers and record controls in a private draft.
 
-The single CLI supports human-readable columns and --json. Run npm run admissions -- help. Names match without case and IDs accept prefixes. Ambiguous references list candidates and exit 1. The demo deliberately has two applications named Alex Sample: use APP-101 or APP-105.
+There are 33 slash commands and 30 CLI commands. The single CLI supports human-readable columns and --json. Run npm run admissions -- help. Names match without case and IDs accept prefixes. Ambiguous references list candidates and exit 1. The demo deliberately has two applications named Alex Sample: use APP-101 or APP-105.
 
 ## Bring your application records across
 
