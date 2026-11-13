@@ -1,0 +1,3 @@
+Application GUID,Applicant Reference,Applicant Name,Intake Code,Submitted Date,Review Due Date,Owner,Purpose,Retention Review Date,Legacy Bin
+export-app-001,export-person-1,"Riley, Example",DIP-2027,2026-10-01,2026-11-20,Morgan,Submitted admission review,2027-10-01,Committee
+export-app-002,export-person-2,Quinn Example,CERT-2027,2026-10-02,2026-11-21,Jules,Submitted admission review,2027-10-02,Review

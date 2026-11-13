@@ -1,11 +1,65 @@
 [
   {
-    "name": "example",
-    "title": "TODO(author): the first document this industry must produce",
-    "for_each": "select gen_random_uuid() as id, 'Example' as name",
-    "file": "name",
+    "name": "committee-packet",
+    "title": "Committee review packet",
+    "for_each": "SELECT id,external_id FROM application_desk WHERE desk_state='committee-ready'",
+    "file": "external_id",
     "sections": [
-      { "title": "Details", "sql": "select 'replace me' as item, $1::text as record_id" }
+      {
+        "title": "Application",
+        "layout": "record",
+        "sql": "SELECT external_id,name,intake,owner,received_on,due_on,desk_state FROM application_desk WHERE id=$1",
+        "note": "Administrative completeness only. This report does not assess merit or recommend an outcome."
+      },
+      {
+        "title": "Material evidence",
+        "sql": "SELECT name,status,evidence,recorded_by FROM materials WHERE application_id=$1 ORDER BY name"
+      },
+      {
+        "title": "Reader evidence",
+        "sql": "SELECT reader,completed_on,evidence,recorded_by FROM reviews WHERE application_id=$1 ORDER BY reader"
+      }
+    ]
+  },
+  {
+    "name": "decision-record",
+    "title": "Recorded committee decision",
+    "for_each": "SELECT id,external_id FROM applications WHERE EXISTS(SELECT 1 FROM decisions WHERE application_id=applications.id)",
+    "file": "external_id",
+    "sections": [
+      {
+        "title": "Application",
+        "layout": "record",
+        "sql": "SELECT external_id,name,intake,owner FROM application_desk WHERE id=$1"
+      },
+      {
+        "title": "Human authorisation",
+        "layout": "record",
+        "sql": "SELECT outcome,decided_on,authorised_by,evidence,offer_due_on,actor FROM decisions WHERE application_id=$1",
+        "note": "Internal evidence copy. Not an offer letter, official notice or sent communication."
+      },
+      {
+        "title": "Response evidence",
+        "sql": "SELECT r.response,r.received_on,r.evidence,r.actor FROM responses r JOIN decisions d ON d.id=r.decision_id WHERE d.application_id=$1"
+      }
+    ]
+  },
+  {
+    "name": "material-checklist",
+    "title": "Missing material checklist",
+    "for_each": "SELECT DISTINCT a.id,a.external_id FROM applications a JOIN materials m ON m.application_id=a.id WHERE m.status='missing'",
+    "file": "external_id",
+    "sections": [
+      {
+        "title": "Application",
+        "layout": "record",
+        "sql": "SELECT external_id,name,intake,owner FROM application_desk WHERE id=$1"
+      },
+      {
+        "title": "Outstanding materials",
+        "sql": "SELECT name,due_on FROM materials WHERE application_id=$1 AND status='missing' ORDER BY due_on,name",
+        "note": "Private follow-up record. Check current evidence before contacting anyone."
+      }
     ]
   }
 ]

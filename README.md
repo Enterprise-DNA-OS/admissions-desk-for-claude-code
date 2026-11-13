@@ -1,60 +1,19 @@
-<h1 align="center">Admissions Desk for Claude Code</h1>
+# Admissions Desk for Claude Code
 
-<p align="center">
-  <strong>The open-source admissions review desk that is just a database and Claude Code.</strong>
-</p>
+Run the internal admissions review desk from records you own: required materials, reader queues, committee evidence and offer follow-up. A focused alternative for work done inside Slate Admissions.
 
-<p align="center">
-  Created by <a href="https://www.enterprisedna.co"><strong>Enterprise DNA</strong></a>. Free and open source. Works with Claude Code, Codex, OpenCode or Cursor.
-</p>
+Built by Enterprise DNA. MIT licence. Runs with Claude Code, Codex, OpenCode or Cursor.
 
-<!-- three-doors -->
-<table align="center">
-  <tr>
-    <td align="center"><strong>Do it yourself</strong><br/>Clone it, run it, own it. Free, MIT.<br/><a href="#quick-start">Quick start</a></td>
-    <td align="center"><strong>We customise it</strong><br/>Your fields, your rules, your Slate Admissions data brought across.<br/><a href="https://enterprisedna.co/omni/book/?utm_source=github&utm_medium=readme&utm_campaign=slate-admissions">Book a call</a></td>
-    <td align="center"><strong>We run it for you</strong><br/>Installed, connected and operated inside Omni. Setup fee, then a retainer.<br/><a href="https://enterprisedna.co/omni/instead-of/slate-admissions?utm_source=github&utm_medium=readme&utm_campaign=slate-admissions">How it works</a></td>
-  </tr>
-</table>
+| Do it yourself | We customise it | We run it for you |
+|---|---|---|
+| Free. Install and operate the database and commands. | Your intakes, material rules, export mapping and reports. | Installed, connected and operated through Omni by Enterprise DNA. Setup fee, then a retainer. |
+| [Quick start](#quick-start) | [Get your version built](https://enterprisedna.co/omni/book/?offer=replace-software&utm_medium=github&utm_campaign=slate-admissions) | [Book a call](https://enterprisedna.co/omni/book/?offer=replace-software&utm_medium=github&utm_campaign=slate-admissions) |
 
-<p align="center">
-  <a href="#what-is-this">What is this</a> &bull;
-  <a href="#why-no-front-end">Why no front end</a> &bull;
-  <a href="#quick-start">Quick start</a> &bull;
-  <a href="#the-commands">Commands</a> &bull;
-  <a href="#instead-of-slate-admissions">Instead of Slate Admissions</a> &bull;
-  <a href="#want-it-installed-and-run-for-you">Installed for you</a> &bull;
-  <a href="#license">License</a>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Node-20+-339933?style=flat-square" alt="Node 20+" />
-  <img src="https://img.shields.io/badge/PostgreSQL-any-336791?style=flat-square" alt="PostgreSQL" />
-  <img src="https://img.shields.io/badge/PGlite-embedded-3ecf8e?style=flat-square" alt="PGlite" />
-  <img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" alt="MIT License" />
-</p>
-
----
-
-## What is this
-
-Admissions Desk for Claude Code does the job you pay Slate Admissions for, as a Postgres database and a set of agent commands. There is no web front end. You open the folder in [Claude Code](https://claude.com/claude-code) (or Codex, OpenCode, Cursor: see `AGENTS.md`) and ask for what you want in plain language. It runs the right query, and it can answer questions the Slate Admissions dashboard cannot.
-
-<!-- TODO(author): the annual bill. One sentence: what a 10 to 50 person business typically pays Slate Admissions per year, all in, with a source. -->
-
-Want the same thing with a web front end, or built on a different stack? That is a customisation, and it is exactly what Enterprise DNA does: [book a call](https://enterprisedna.co/omni/book/?utm_source=github&utm_medium=readme&utm_campaign=slate-admissions).
-
-<!-- TODO(author): two or three sentences on what this specific product covers and who it is for. -->
-
-## Why no front end
-
-- The front end was only ever there because the database was hard to talk to. That is no longer true.
-- Your data sits in plain Postgres tables you own. Any tool can read them. No export, no lock-in.
-- No seats, no tiers, no add-ons. Read [docs/why-no-front-end.md](docs/why-no-front-end.md) for the honest trade-offs too.
+Technolutions lists annual admissions licences from US$30,000 and says most clients pay US$50,000. These are vendor licence figures, not a verified local invoice. [Pricing checked 13 November 2026](https://technolutions.com/licensing). This is the internal review desk, not a complete replacement for Slate's portals, forms, communication services or student lifecycle platform.
 
 ## Quick start
 
-Sixty seconds, no database install (an embedded Postgres runs inside Node):
+Node 20 or newer. No vendor connection or paid database needed for the demo.
 
 ```bash
 git clone https://github.com/Enterprise-DNA-OS/admissions-desk-for-claude-code.git
@@ -63,53 +22,76 @@ npm install
 npm run demo
 ```
 
-Then open the folder in Claude Code and type a slash command. <!-- TODO(author): name the first command to try. -->
+Demo data lives in .data/demo. For a separate working example in the default .data/db, run npm run migrate then npm run seed. The seed contains only fictional records and is idempotent. Never seed a production database. Set DATA_DIR=.data/demo in your shell to explore the demo further, or use the seeded default database:
 
-### Use it with your own Postgres or Supabase
-
-Copy `.env.example` to `.env`, set `DATABASE_URL`, then `npm run migrate`. Same commands, shared data, no per-seat fee.
-
-## The commands
-
-<!-- TODO(author): a table of the slash commands in .claude/commands and what each one does. -->
-
-| Command | What it does |
-|---|---|
-| `/...` | ... |
-
-## Instead of Slate Admissions
-
-<!-- TODO(author): how to bring data across from Slate Admissions; link docs/replace-slate-admissions.md -->
-
-## Architecture
-
-```
-admissions-desk-for-claude-code/
-  CLAUDE.md                 how the operator wants this run (routing table + house rules)
-  AGENTS.md                 the same, for Codex / OpenCode / Cursor / Gemini CLI
-  .claude/commands/         the slash commands
-  scripts/                  the CLI the commands drive
-  scripts/lib/db.mjs        one adapter: DATABASE_URL (pg) or embedded PGlite
-  supabase/migrations/      plain SQL schema
-  supabase/seed.sql         demo data
-  docs/                     the thesis and the migration guide
+```bash
+npm run admissions -- attention
+npm run admissions -- committee-ready --json
+npm run view
+npm run docs
 ```
 
-## Built for coding agents
+PGlite runs locally. Set DATABASE_URL for PostgreSQL. The CLI expects a trusted operator connection. Hosted multi-user use needs identity, scoped access, tested backups and retention controls before real applicant records are loaded.
 
-The database, CLI and command recipes work with Claude Code, Codex, OpenCode or Cursor. Ask your coding agent for a new command and have it implement and test the change against the same records.
+## The working week
 
-## Contributing
+1. /material-chase finds missing documents and overdue files.
+2. /reader-queue shows assigned readers and due dates.
+3. /committee-ready prepares administratively complete files for people to assess.
+4. /offer-followup lists recorded offers with no response.
+5. /weekly-review combines attention, reader workload, offers and record controls in a private draft.
 
-Issues and pull requests are welcome. Keep the shape: plain SQL, a small CLI, a slash command per recurring job, no front end.
+The single CLI supports human-readable columns and --json. Run npm run admissions -- help. Names match without case and IDs accept prefixes. Ambiguous references list candidates and exit 1. The demo deliberately has two applications named Alex Sample: use APP-101 or APP-105.
 
-## Want it installed and run for you?
+## Bring your application records across
 
-Enterprise DNA installs Admissions Desk for Claude Code for your business, migrates your Slate Admissions data, connects it to the rest of your tools, and runs it for you as part of **Omni**, our managed Command Center. One setup fee, then a monthly retainer.
+The [switching guide](docs/replace-slate-admissions.md) defines a configured Slate application CSV with nine required aliases. Register intakes, export cumulative rows, reconcile the count, then run one import. Dry runs write nothing. Imports are atomic, duplicate-safe and preserve every original exported column. Source plus application identifier keeps institutions separate. Review forms, attachments and decision history need additional mapping and are never inferred from a status field.
 
-- Book a call: [enterprisedna.co/omni/book](https://enterprisedna.co/omni/book/?offer=replace-software&utm_source=github&utm_medium=readme&utm_campaign=slate-admissions)
-- Read more: [enterprisedna.co/omni/instead-of/slate-admissions](https://enterprisedna.co/omni/instead-of/slate-admissions?utm_source=github&utm_medium=readme&utm_campaign=slate-admissions)
+```bash
+npm run admissions -- import slate --source="Institution Slate" --file=imports/applications.csv --expected-count=250 --source-ref="Actual source query and export date" --actor="Actual operator" --dry-run
+```
 
-## License
+## Record the institution's decisions
 
-MIT. Copyright (c) 2026 Enterprise DNA.
+Confirm the required-material list against your policy, resolve each requirement with evidence, assign readers, record their completed review evidence and check accuracy. Only then can an existing human committee decision be recorded with its authoriser and evidence reference. Administrative readiness is not an eligibility judgement. No scoring, ranking or automatic accept/reject system is included. Nothing sends an email or official decision.
+
+Decisions, responses, notes, import receipts and activity events are append-only. Typed names provide attribution, not authentication. Corrections go in notes for authorised review. A database owner can bypass application controls. [Record controls and cited rules](docs/compliance.md).
+
+## Ten questions to ask
+
+These queries work today. They are not claims that Slate cannot produce a similar report.
+1. Which applications are overdue and still missing materials? `attention`
+2. Which readers have the most overdue work? `workload`
+3. Which applications have complete administrative evidence for committee? `committee-ready`
+4. Which offers have no recorded response? `offer-followup`
+5. Which intake has the largest group waiting for materials? `funnel`
+6. Which records need an accuracy or retention review? `compliance`
+7. How long did recorded decisions take by intake? `turnaround`
+8. What source export and independent count support the imported records? `imports`
+9. Who confirmed each checklist or recorded a committee decision? `history`
+10. What material, reader and note history belongs to this application? `application --ref=APP-101`
+
+## Your first hour: ten things to ask for
+
+1. Put our name, logo and colours in brand.json.
+2. Register our real intake codes and owners.
+3. Agree which source query covers the applications we need.
+4. Set a documented purpose and retention review policy.
+5. Check the source count before importing.
+6. Map our required materials and evidence references.
+7. Assign each reader and due date.
+8. Confirm the checklist against our policy.
+9. Generate the internal committee packet.
+10. Add our own read-only weekly view.
+
+/customise adds a field, changes a local rule or renames a stage through a versioned migration and tests. /new-view creates a read-only report.
+
+## Documents, views and backups
+
+npm run docs produces branded committee packets, internal decision records and missing-material checklists under docs-out/. npm run view produces views/week.html. Both use brand.json and escape record values. They are internal reports, not official notices. [Why no front end](docs/why-no-front-end.md).
+
+npm run admissions -- export --file=exports/backup.json saves all nine domain record types in a new file and refuses overwrites. Keep native database backups and original exports too. An automatic JSON restore is not included. Test restoration before production use.
+
+npm test uses a temporary database and checks every CLI command, import rollback and idempotency, source isolation, ambiguity, evidence gates, decisions, responses, escaped reports and private outputs. The manual workflow covers Windows and Linux with Node 20 and 22, plus PostgreSQL 17. [Executed validation](docs/validation.md).
+
+[Selection evidence](docs/research.md). Built and optionally operated through [Omni by Enterprise DNA](https://enterprisedna.co/omni/instead-of/slate-admissions?utm_source=github&utm_medium=readme&utm_campaign=slate-admissions).

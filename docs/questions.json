@@ -1,0 +1,42 @@
+[
+  {
+    "question": "Which applications are overdue and still missing materials?",
+    "command": "npm run admissions -- attention"
+  },
+  {
+    "question": "Which readers have the most overdue work?",
+    "command": "npm run admissions -- workload"
+  },
+  {
+    "question": "Which applications have complete administrative evidence for committee?",
+    "command": "npm run admissions -- committee-ready"
+  },
+  {
+    "question": "Which offers have no recorded response?",
+    "command": "npm run admissions -- offer-followup"
+  },
+  {
+    "question": "Which intake has the largest group waiting for materials?",
+    "command": "npm run admissions -- funnel"
+  },
+  {
+    "question": "Which records need an accuracy or retention review?",
+    "command": "npm run admissions -- compliance"
+  },
+  {
+    "question": "How long did recorded decisions take by intake?",
+    "command": "npm run admissions -- turnaround"
+  },
+  {
+    "question": "What source export and independent count support the imported records?",
+    "command": "npm run admissions -- imports"
+  },
+  {
+    "question": "Who confirmed each checklist or recorded a committee decision?",
+    "command": "npm run admissions -- history"
+  },
+  {
+    "question": "What material, reader and note history belongs to this application?",
+    "command": "npm run admissions -- application --ref=APP-101"
+  }
+]

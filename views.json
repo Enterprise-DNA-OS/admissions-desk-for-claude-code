@@ -1,13 +1,24 @@
 [
   {
     "name": "week",
-    "title": "This week",
-    "subtitle": "Admissions Desk for Claude Code: what needs attention, rendered by npm run view",
+    "title": "Admissions desk this week",
+    "subtitle": "Fictional demo when seeded. Internal records, no applicant rankings.",
     "sections": [
       {
-        "title": "Needs attention",
-        "note": "TODO(author): point this at the industry's attention view (overdue, stuck, quiet).",
-        "sql": "select 'replace me' as item, 'TODO(author)' as why"
+        "title": "Applications needing attention",
+        "sql": "SELECT external_id,name,intake,owner,desk_state,missing_materials,pending_reviews FROM application_desk WHERE outcome IS NULL ORDER BY due_on,external_id"
+      },
+      {
+        "title": "Reader workload",
+        "sql": "SELECT reader,count(*) AS pending,count(*) FILTER (WHERE overdue_days>0) AS overdue FROM reader_queue GROUP BY reader ORDER BY reader"
+      },
+      {
+        "title": "Offer follow-up",
+        "sql": "SELECT external_id,name,owner,offer_due_on FROM offer_followup ORDER BY offer_due_on"
+      },
+      {
+        "title": "Record controls",
+        "sql": "SELECT external_id,rule,finding FROM compliance_findings ORDER BY external_id,rule"
       }
     ]
   }

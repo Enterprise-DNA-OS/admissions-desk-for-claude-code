@@ -1,0 +1,24 @@
+{
+  "captured": "2026-11-13",
+  "dataset": "Fictional seed, isolated .data/page-demo",
+  "screens": [
+    {
+      "title": "Outstanding files",
+      "ask": "Which applications need attention before the next committee meeting?",
+      "command": "node scripts/admissions.mjs attention",
+      "output": "  external_id  owner   desk_state             missing_materials  pending_reviews\n  -----------  ------  ---------------------  -----------------  ---------------\n  APP-104      Jules   checklist-unconfirmed  0                  0              \n  APP-101      Morgan  materials-outstanding  1                  1              \n  APP-105      Morgan  in-review              0                  1              "
+    },
+    {
+      "title": "Reader workload",
+      "ask": "Who has overdue application reviews?",
+      "command": "node scripts/admissions.mjs workload",
+      "output": "  reader  pending  overdue\n  ------  -------  -------\n  Samira  2        2      "
+    },
+    {
+      "title": "Committee preparation",
+      "ask": "Which files have the administrative evidence ready for committee?",
+      "command": "node scripts/admissions.mjs committee-ready",
+      "output": "  external_id  name            intake    owner   age_days\n  -----------  --------------  --------  ------  --------\n  APP-102      Jordan Example  DIP-2027  Morgan  20      "
+    }
+  ]
+}
